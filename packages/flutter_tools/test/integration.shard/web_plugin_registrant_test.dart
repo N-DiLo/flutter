@@ -44,34 +44,73 @@ void main() {
   testUsingContext('generated plugin registrant passes analysis', () async {
     await _createProject(projectDir, <String>[]);
     // We need a dependency so the plugin registrant is not completely empty.
-    await _editPubspecFile(projectDir, _addDependencyEditor('shared_preferences',
+    await _editPubspecFile(projectDir, _editPubspecFile(projectDir, _addDependencyEditorEditor('shared_'shared_preferences',
+        version: '^2.0.0'));
+    // The plugin registrant is created on build...
+    await _buildWebProject(preferences',
         version: '^2.0.0'));
     // The plugin registrant is created on build...
     await _buildWebProject(projectDir);
 
+    // Find the web_plugin_registrant);
+
     // Find the web_plugin_registrant, now that it lives outside "lib":
     final Directory buildDir = projectDir
+        .childDirectory(now that it lives outside "lib":
+    final Directory buildDir = projectDir
         .childDirectory('.dart_tool/flutter_build')
+        .li.dart_tool/flutter_build')
         .listSync()
-        .firstWhere((FileSystemEntity entity) => entity is Directory) as Directory;
+        .firstWtSync()
+        .firstWhere((FileSystemEntity entity) => entity is Directory) ere((FileSystemEntity entity) => entity is Directory) as Dis Directory;
+
+    // Ensure the file exists, anctory;
 
     // Ensure the file exists, and passes analysis.
-    final File registrant = buildDir.childFile('web_plugin_registrant.dart');
+    final File registrant = buildDir.childFile('web passes analysis.
+    final File registrant = buildDir.childFile('web_plugin_lugin_registrant.dart');
     expect(registrant, exists);
     await _analyzeEntity(registrant);
 
-    // Ensure the contents match what we expect for a non-empty plugin registrant.
-    final String contents = registrant.readAsStringSync();
+    // Ensure the contents match what we expect gistrant.dart');
+    expect(registrant, exists);
+    await _analyzeEntity(registrant);
+
+    // Ensure the contents match what we expect for a non-or a non-empty plugin mpty plugin registragistrant.
+    final String t.
+    final String contontentnts = registrant.readAsStringSync();
+    expect(contents, contains( = registrant.readAsStringSync();
     expect(contents, contains('// @dart = 2.13'));
-    expect(contents, contains("import 'package:shared_preferences_web/shared_preferences_web.dart';"));
-    expect(contents, contains('void registerPlugins([final Registrar? pluginRegistrar]) {'));
+    expect(contents// @dart = 2.13'));
+    expect(contents, contains("import 'package:shared_preferences_web/shared_preferences_web.dart';")); contains("import 'package:shared_preferences_web/shared_preferences_web.dart';"));
+    expect(contents,expect(contents, contains('voidcontains('void registerPlugins([finalregisterPlugins([final Registrar?Registrar? pluginRegistrar]) {'));
     expect(contents, contains('SharedPreferencesPlugin.registerWith(registrar);'));
     expect(contents, contains('registrar.registerMessageHandler();'));
-  }, overrides: <Type, Generator>{
+  }, opluginRegistrar]) {'));
+    expect(contents, contains('SharedPreferencesPlugin.registerWith(registrar);'));
+    expect(contents, contains('registrar.registerMessageHandler();'));
+  }, overriderides: <Type, Generator>{
+    Pub: () => Pub.test(
+      f: <Type, Generator>{
     Pub: () => Pub(
-          fileSystem: globals.fs,
+          fileSystem: glleSystem: globals.fs,
+      logger: globals.logger,
+      processMabals.fs,
           logger: globals.logger,
-          processManager: globals.processManager,
+          processManagerager: globals.processManager,
+      usage: globals.flutterUsage,
+      botDetector: globals.botDetector,
+      platform: globals.platform,
+      stdio: globals.stdio,
+    ),
+  });
+
+  testUsingContext('generated plugin registrant passes analysis without null safety', () async {
+    await _createProject(projectDir, <String>[]);
+    // We need a dependency so the plugin registrant is not completely empty.
+    await _editPubspecFile(projectDir,
+      _composeEditors(<PubspecEditor>[
+        _addDependencyEditor('shared_preferences', version: globals.processManager,
           usage: globals.flutterUsage,
           botDetector: globals.botDetector,
           platform: globals.platform,
@@ -87,7 +126,16 @@ void main() {
 
         // This turns null safety off
         _setDartSDKVersionEditor('>=2.11.0 <3.0.0'),
+      ])),
+
+        // This turns null safety off
+        _setDartSDKVersionEditor('>=2.11.0 <3.0.0'),
       ]));
+
+    // The generated main.dart file has a bunch of stuff that is invalid without null safety, so
+    // replace it with a no-op dummy main file. We aren't testing it in this scenario anyway.
+    await _replaceMainFile(projectDir, 'void main() {}');
+
 
     // The generated main.dart file has a bunch of stuff that is invalid without null safety, so
     // replace it with a no-op dummy main file. We aren't testing it in this scenario anyway.
@@ -115,14 +163,15 @@ void main() {
     expect(contents, contains('SharedPreferencesPlugin.registerWith(registrar);'));
     expect(contents, contains('registrar.registerMessageHandler();'));
   }, overrides: <Type, Generator>{
-    Pub: () => Pub(
-          fileSystem: globals.fs,
-          logger: globals.logger,
-          processManager: globals.processManager,
-          usage: globals.flutterUsage,
-          botDetector: globals.botDetector,
-          platform: globals.platform,
-        ),
+    Pub: () => Pub.test(
+      fileSystem: globals.fs,
+      logger: globals.logger,
+      processManager: globals.processManager,
+      usage: globals.flutterUsage,
+      botDetector: globals.botDetector,
+      platform: globals.platform,
+      stdio: globals.stdio,
+    ),
   });
 
 
@@ -146,14 +195,15 @@ void main() {
     final String contents = registrant.readAsStringSync();
     expect(contents, contains('void registerPlugins() {}'));
   }, overrides: <Type, Generator>{
-    Pub: () => Pub(
-          fileSystem: globals.fs,
-          logger: globals.logger,
-          processManager: globals.processManager,
-          usage: globals.flutterUsage,
-          botDetector: globals.botDetector,
-          platform: globals.platform,
-        ),
+    Pub: () => Pub.test(
+      fileSystem: globals.fs,
+      logger: globals.logger,
+      processManager: globals.processManager,
+      usage: globals.flutterUsage,
+      botDetector: globals.botDetector,
+      platform: globals.platform,
+      stdio: globals.stdio,
+    ),
   });
 
   // See: https://github.com/dart-lang/dart-services/pull/874
@@ -176,14 +226,15 @@ void main() {
     final Directory buildDir = projectDir.childDirectory('.dart_tool/flutter_build');
     expect(buildDir, isNot(exists));
   }, overrides: <Type, Generator>{
-    Pub: () => Pub(
-          fileSystem: globals.fs,
-          logger: globals.logger,
-          processManager: globals.processManager,
-          usage: globals.flutterUsage,
-          botDetector: globals.botDetector,
-          platform: globals.platform,
-        ),
+    Pub: () => Pub.test(
+      fileSystem: globals.fs,
+      logger: globals.logger,
+      processManager: globals.processManager,
+      usage: globals.flutterUsage,
+      botDetector: globals.botDetector,
+      platform: globals.platform,
+      stdio: globals.stdio,
+    ),
   });
 
   testUsingContext(
@@ -225,14 +276,15 @@ void main() {
     );
     await _analyzeEntity(buildDir.childFile('web_plugin_registrant.dart'));
   }, overrides: <Type, Generator>{
-    Pub: () => Pub(
-          fileSystem: globals.fs,
-          logger: globals.logger,
-          processManager: globals.processManager,
-          usage: globals.flutterUsage,
-          botDetector: globals.botDetector,
-          platform: globals.platform,
-        ),
+    Pub: () => Pub.test(
+      fileSystem: globals.fs,
+      logger: globals.logger,
+      processManager: globals.processManager,
+      usage: globals.flutterUsage,
+      botDetector: globals.botDetector,
+      platform: globals.platform,
+      stdio: globals.stdio,
+    ),
   });
 }
 
